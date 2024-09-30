@@ -1,0 +1,86 @@
+Administracion de base de datos
+Libros y Autores
+
+Tabla persona
+create table Persona(
+idPersona serial,
+Nombre varchar(255),
+ApellidoPaterno varchar (255),
+ApellidoMaterno varchar (255),
+Telefono int,
+Domicilio varchar (255),
+Correo varchar (255),
+Edad int,
+PRIMARY KEY (idPersona)
+);
+
+Tabla Editorial
+create table Editorial(
+idEditorial serial,
+Nombre varchar (255),
+PRIMARY KEY (idEditorial)
+);
+
+Tabla Generos
+create table Generos(
+idGenero serial,
+Nombre varchar (255),
+Clasificacion varchar(255),
+PRIMARY KEY (idGenero)
+);
+
+Tabla Autores
+create table Autores(
+idAutor serial,
+Nombre varchar (255),
+ApellidoPaterno varchar(255),
+ApellidoMaterno varchar(255),
+FechaNacimiento date,
+PRIMARY KEY (idAutor)
+);
+
+Tabla Libros
+Create table Libros(
+idLibros serial,
+Titulo varchar(255),
+Idioma varchar(255),
+NumeroPaginas int,
+AñoPublicacion date,
+Precio money,
+idEditorial int,
+idGenero int,
+idAutor int,
+PRIMARY KEY (idLibros),
+CONSTRAINT fk_editorial  FOREIGN KEY (idEditorial) REFERENCES Editorial (idEditorial),
+CONSTRAINT fk_genero  FOREIGN KEY (idGenero) REFERENCES Generos (idGenero),
+CONSTRAINT fk_autor  FOREIGN KEY (idAutor) REFERENCES Autores (idAutor)
+);
+
+Tabla Prestamos
+create table Prestamos(
+idPrestamo serial,
+idLibros int,
+idPersona int,
+FechaPrestamo date,
+FechaDevolucion date,
+PRIMARY KEY (idPrestamo),
+CONSTRAINT fk_libros FOREIGN KEY (idLibros) REFERENCES Libros (idLibros),
+CONSTRAINT fk_persona FOREIGN KEY (idPersona) REFERENCES Persona (idPersona)
+);
+
+MODIFICACIONES
+1. Tabla Persona: Cambiar Telefono a varchar y agregar restricción UNIQUE para Correo
+
+ALTER TABLE Persona
+  ALTER COLUMN Telefono TYPE varchar(20),
+  ADD CONSTRAINT unique_correo UNIQUE (Correo);
+
+2. Tabla Editorial: Agregar restricción UNIQUE a Nombre
+ALTER TABLE Editorial
+  ADD CONSTRAINT unique_nombre_editorial UNIQUE (Nombre);
+
+3. Tabla Libros: Cambiar Precio de money a decimal(10,2)
+ALTER TABLE Libros ADD COLUMN Precio decimal(10,2)
+
+4. Tabla Prestamos: Validar que FechaDevolucion no sea anterior a FechaPrestamo
+ALTER TABLE Prestamos ADD CONSTRAINT check_fecha_devolucion CHECK (FechaDevolucion >= FechaPrestamo)

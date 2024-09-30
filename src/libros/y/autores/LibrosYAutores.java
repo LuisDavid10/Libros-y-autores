@@ -16,7 +16,15 @@ public class LibrosYAutores {
     public static void main(String[] args) {
         // TODO code application logic here
     }
+
+    public class autores(){
+
+    }
     
     public static void prueba() {
+    }
+
+    public class libros() {
+        
     }
 }
