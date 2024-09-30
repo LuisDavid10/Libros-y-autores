@@ -17,7 +17,6 @@ public class LibrosYAutores {
         // TODO code application logic here
     }
     
-    public static prueba() {
-        
+    public static void prueba() {
     }
 }
