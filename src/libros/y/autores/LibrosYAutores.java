@@ -21,8 +21,7 @@ public class LibrosYAutores {
 
     }
     
-    public static prueba() {
-        
+    public static void prueba() {
     }
 
     public class libros() {
