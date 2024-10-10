@@ -17,14 +17,5 @@ public class LibrosYAutores {
         // TODO code application logic here
     }
 
-    public class autores(){
 
-    }
-    
-    public static void prueba() {
-    }
-
-    public class libros() {
-        
-    }
 }
