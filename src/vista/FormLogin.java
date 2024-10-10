@@ -131,7 +131,7 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_usuariosActionPerformed
 
     private void jButton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_accederActionPerformed
-        // TODO add your handling code here:
+        this.IniciarSesion();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton_accederActionPerformed
 
     /**
