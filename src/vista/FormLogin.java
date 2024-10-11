@@ -78,7 +78,23 @@ public class FormLogin extends javax.swing.JFrame {
                 jTextField_usuariosActionPerformed(evt);
             }
         });
+        jTextField_usuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_usuariosKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextField_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 240, 30));
+
+        jPasswordField_contraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField_contraseñaActionPerformed(evt);
+            }
+        });
+        jPasswordField_contraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPasswordField_contraseñaKeyTyped(evt);
+            }
+        });
         jPanel1.add(jPasswordField_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 240, 30));
 
         jButton_acceder.setBackground(new java.awt.Color(0, 0, 102));
@@ -99,7 +115,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("BIENIDOS AL SISTEMA DE LIBROS Y AUTORES");
+        jLabel4.setText("BIENVENIDOS AL SISTEMA DE LIBROS Y AUTORES");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -118,7 +134,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Instituto Tecnologico de Saltillo");
+        jLabel9.setText("Instituto Tecnológico de Saltillo");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 550, 550));
@@ -133,6 +149,25 @@ public class FormLogin extends javax.swing.JFrame {
     private void jButton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_accederActionPerformed
         this.IniciarSesion();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton_accederActionPerformed
+
+    private void jPasswordField_contraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField_contraseñaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jPasswordField_contraseñaActionPerformed
+
+    private void jTextField_usuariosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_usuariosKeyTyped
+        // TODO add your handling code here:
+        if(jTextField_usuarios.getText().length() >= 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField_usuariosKeyTyped
+
+    private void jPasswordField_contraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField_contraseñaKeyTyped
+        // TODO add your handling code here:
+        if(jPasswordField_contraseña.getText().length() >= 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jPasswordField_contraseñaKeyTyped
 
     /**
      * @param args the command line arguments

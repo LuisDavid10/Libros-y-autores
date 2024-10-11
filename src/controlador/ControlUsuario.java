@@ -15,7 +15,7 @@ public class ControlUsuario {
     public boolean login(Usuario objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.connectar();
-        String sql = "select cuenta, clave from usuarios where cuenta = ' " + objeto.getCuenta()+ "' and clave = ' " + objeto.getClave()+ "'";
+        String sql = "select cuenta, clave from usuarios where cuenta = '" + objeto.getCuenta()+ "' and clave = '" + objeto.getClave()+ "'";
 
         Statement st;
 

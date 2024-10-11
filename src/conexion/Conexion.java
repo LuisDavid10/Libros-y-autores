@@ -14,7 +14,7 @@ public class Conexion {
     
     public static Connection connectar(){
         try {
-            Connection cn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/My_LibrosAutores", "postgres", "Hinojosa");
+            Connection cn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/My_LibrosAutores", "user1_adb", "12345");
             System.out.println("Conexión exitosa");
             return cn;
         }catch(SQLException e) {
