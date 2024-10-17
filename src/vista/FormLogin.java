@@ -233,6 +233,10 @@ private void IniciarSesion(){
         if(controlUsuario.login(usuario)){
             System.out.println("Inicio sesion correctamente");
             JOptionPane.showMessageDialog(null, "Inicio sesion correctamente");
+            
+            FormMenu menu = new FormMenu();
+            menu.setVisible(true);
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Usuario o clave incorrectos");
         }
