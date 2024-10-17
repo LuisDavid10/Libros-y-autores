@@ -13,6 +13,10 @@ public class FormMenu extends javax.swing.JFrame {
     /**
      * Creates new form FormMenu
      */
+    
+ 
+    
+    
     public FormMenu() {
         initComponents();
         this.setSize(900,550);
@@ -40,7 +44,12 @@ public class FormMenu extends javax.swing.JFrame {
         jPanel_editorial = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField_id_editorial = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField_nombre = new javax.swing.JTextField();
+        jButton_limpiar = new javax.swing.JButton();
+        jButton_guardar = new javax.swing.JButton();
+        jButton_eliminar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
@@ -82,16 +91,68 @@ public class FormMenu extends javax.swing.JFrame {
 
         jPanel_editorial.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 153));
         jLabel3.setText("Registro de Editoriales ");
-        jPanel_editorial.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 200, -1));
+        jPanel_editorial.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 280, -1));
 
-        jLabel4.setText("id:");
-        jPanel_editorial.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 153));
+        jLabel4.setText("ID Editorial:");
+        jPanel_editorial.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 90, 30));
 
-        jTextField1.setText("jTextField1");
-        jPanel_editorial.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
+        jTextField_id_editorial.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField_id_editorial.setForeground(new java.awt.Color(0, 0, 153));
+        jTextField_id_editorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_id_editorialActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jTextField_id_editorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 230, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 153));
+        jLabel5.setText("Nombre:");
+        jPanel_editorial.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 90, 30));
+
+        jTextField_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField_nombre.setForeground(new java.awt.Color(0, 0, 153));
+        jTextField_nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_nombreActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jTextField_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 230, -1));
+
+        jButton_limpiar.setBackground(new java.awt.Color(0, 0, 102));
+        jButton_limpiar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_limpiar.setText("Limpiar");
+        jButton_limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_limpiarActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jButton_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 100, -1));
+
+        jButton_guardar.setBackground(new java.awt.Color(0, 0, 102));
+        jButton_guardar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_guardar.setText("Guardar");
+        jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_guardarActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 100, -1));
+
+        jButton_eliminar.setBackground(new java.awt.Color(0, 0, 102));
+        jButton_eliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_eliminar.setText("Eliminar");
+        jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_eliminarActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 100, -1));
 
         jTabbedPane1.addTab("Editorial", jPanel_editorial);
 
@@ -130,7 +191,30 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jButton_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cerrar_sesionActionPerformed
         // TODO add your handling code here:
+        
+        System.exit(0);
+        System.out.println("Se cerro seción correctamente");
     }//GEN-LAST:event_jButton_cerrar_sesionActionPerformed
+
+    private void jTextField_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_nombreActionPerformed
+
+    private void jTextField_id_editorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_editorialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_id_editorialActionPerformed
+
+    private void jButton_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_limpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_limpiarActionPerformed
+
+    private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_guardarActionPerformed
+
+    private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,10 +253,14 @@ public class FormMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_cerrar_sesion;
+    private javax.swing.JButton jButton_eliminar;
+    private javax.swing.JButton jButton_guardar;
+    private javax.swing.JButton jButton_limpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel_footer;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -180,6 +268,7 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel_editorial;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField_id_editorial;
+    private javax.swing.JTextField jTextField_nombre;
     // End of variables declaration//GEN-END:variables
 }
