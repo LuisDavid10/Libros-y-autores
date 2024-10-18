@@ -4,6 +4,10 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+import controlador.ControlEditorial;
+import modelo.Editorial;
+
 /**
  *
  * @author luis_
@@ -13,13 +17,9 @@ public class FormMenu extends javax.swing.JFrame {
     /**
      * Creates new form FormMenu
      */
-    
- 
-    
-    
     public FormMenu() {
         initComponents();
-        this.setSize(900,550);
+        this.setSize(900, 550);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Menu de Libros y Autores");
@@ -50,6 +50,7 @@ public class FormMenu extends javax.swing.JFrame {
         jButton_limpiar = new javax.swing.JButton();
         jButton_guardar = new javax.swing.JButton();
         jButton_eliminar = new javax.swing.JButton();
+        jButton_buscar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
@@ -132,7 +133,7 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_limpiarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 100, -1));
+        jPanel_editorial.add(jButton_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 100, -1));
 
         jButton_guardar.setBackground(new java.awt.Color(0, 0, 102));
         jButton_guardar.setForeground(new java.awt.Color(255, 255, 255));
@@ -142,7 +143,7 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_guardarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 100, -1));
+        jPanel_editorial.add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 100, -1));
 
         jButton_eliminar.setBackground(new java.awt.Color(0, 0, 102));
         jButton_eliminar.setForeground(new java.awt.Color(255, 255, 255));
@@ -152,7 +153,17 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_eliminarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 100, -1));
+        jPanel_editorial.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 100, -1));
+
+        jButton_buscar.setBackground(new java.awt.Color(0, 0, 102));
+        jButton_buscar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_buscar.setText("Buscar");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_buscarActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 100, -1));
 
         jTabbedPane1.addTab("Editorial", jPanel_editorial);
 
@@ -210,11 +221,56 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
         // TODO add your handling code here:
+        //obtenemos el texto de los campos 
+        String id_Text = jTextField_id_editorial.getText().trim();
+        String nombre = jTextField_nombre.getText().trim();
+
+        //validamos que no esten vacíos
+        if (id_Text.isEmpty() || nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
+        } else {
+            
+            try {
+                // Convertir el ID a entero después de la validación
+                int id = Integer.parseInt(id_Text);
+
+                // Aquí puedes continuar con tu lógica, como guardar los datos
+                ControlEditorial controlEditorial = new ControlEditorial();
+                Editorial editorial = new Editorial();
+
+                //revisar si no hay problema porque es int y no string
+                editorial.setId_editorial(id);
+                editorial.setNombre(nombre);
+                
+                if (controlEditorial.guardar(editorial)) {
+                    JOptionPane.showMessageDialog(null, "*** Editorial Registrada   ***");
+                    //cargar la tabla de vehiculos
+
+                    //-----
+                    //Limpiar campos 
+                    jTextField_nombre.setText("");
+                    jTextField_nombre.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al registrar una editorial");
+                }
+                
+            } catch (NumberFormatException e) {
+                // Manejar el caso en que el ID no sea un número válido
+                JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.");
+            }
+        }
+        
+
     }//GEN-LAST:event_jButton_guardarActionPerformed
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_eliminarActionPerformed
+
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton_buscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,6 +308,7 @@ public class FormMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_buscar;
     private javax.swing.JButton jButton_cerrar_sesion;
     private javax.swing.JButton jButton_eliminar;
     private javax.swing.JButton jButton_guardar;

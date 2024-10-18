@@ -11,6 +11,8 @@ import java.sql.*;
  */
 public class ControlEditorial {
     
+    
+    //metodo para registrar el ingreso de un libro
     public boolean guardar (Editorial objeto){
         boolean respuesta = false;
         java.sql.Connection cn = Conexion.connectar();
@@ -18,13 +20,22 @@ public class ControlEditorial {
         
         try{
                 PreparedStatement consulta = cn.prepareStatement("INSERT INTO public.editorial(" +"id_editorial, nombre)" +"VALUES (?, ?);");
+                
                 consulta.setInt(1, 0);//id
                 consulta.setString(2, objeto.getNombre());//nombre
             
+                if(consulta.executeUpdate()>0){
+                    respuesta = true;
+                }
+                
         }catch (SQLException e){
             System.out.println("Error al registrar el ingreso de la editorial " + e);
         }
-        return false;
+        return respuesta;
     }
     
 }
+
+
+
+
