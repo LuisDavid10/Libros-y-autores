@@ -217,29 +217,45 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jButton_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_limpiarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_limpiarActionPerformed
-
-    private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
-        // TODO add your handling code here:
+        //con este vamos a limpiar solamente los capos 
         //obtenemos el texto de los campos 
         String id_Text = jTextField_id_editorial.getText().trim();
         String nombre = jTextField_nombre.getText().trim();
 
         //validamos que no esten vacíos
-        if (id_Text.isEmpty() || nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
+        if ( id_Text.isEmpty() || nombre.isEmpty()) {
+            System.out.println("Ya estan vacias");
+        } else {
+            //si el id esta vacio significa que el nombre si tiene y tenemos que limpiarlo
+            jTextField_id_editorial.setText("");
+            jTextField_nombre.setText("");
+            System.out.println("Ya se limpio");
+        }
+           
+        
+    }//GEN-LAST:event_jButton_limpiarActionPerformed
+
+    private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
+        // TODO add your handling code here:
+        //obtenemos el texto de los campos 
+       // String id_Text = jTextField_id_editorial.getText().trim();
+        String nombre = jTextField_nombre.getText().trim();
+
+        //validamos que no esten vacíos
+        if ( nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre");
         } else {
             
-            try {
+            //try {
                 // Convertir el ID a entero después de la validación
-                int id = Integer.parseInt(id_Text);
+               // int id = Integer.parseInt(id_Text);
 
                 // Aquí puedes continuar con tu lógica, como guardar los datos
                 ControlEditorial controlEditorial = new ControlEditorial();
                 Editorial editorial = new Editorial();
 
                 //revisar si no hay problema porque es int y no string
-                editorial.setId_editorial(id);
+              //  editorial.setId_editorial(id);
                 editorial.setNombre(nombre);
                 
                 if (controlEditorial.guardar(editorial)) {
@@ -254,10 +270,10 @@ public class FormMenu extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Error al registrar una editorial");
                 }
                 
-            } catch (NumberFormatException e) {
+            //} catch (NumberFormatException e) {
                 // Manejar el caso en que el ID no sea un número válido
                 JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.");
-            }
+            //}
         }
         
 
@@ -265,6 +281,7 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         // TODO add your handling code here:
+        //aqui vamos a querer eliminar uno de los registros
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
