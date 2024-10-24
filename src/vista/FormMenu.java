@@ -4,9 +4,14 @@
  */
 package vista;
 
+import conexion.Conexion;
 import javax.swing.JOptionPane;
 import controlador.ControlEditorial;
 import modelo.Editorial;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,12 +22,16 @@ public class FormMenu extends javax.swing.JFrame {
     /**
      * Creates new form FormMenu
      */
+    private int idEditorial = 0;
+
     public FormMenu() {
         initComponents();
         this.setSize(900, 550);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Menu de Libros y Autores");
+
+        this.CargarTablaEditorial();
     }
 
     /**
@@ -51,6 +60,9 @@ public class FormMenu extends javax.swing.JFrame {
         jButton_guardar = new javax.swing.JButton();
         jButton_eliminar = new javax.swing.JButton();
         jButton_buscar = new javax.swing.JButton();
+        jButton_actualizar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable_Editorial = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
@@ -100,7 +112,7 @@ public class FormMenu extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("ID Editorial:");
-        jPanel_editorial.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 90, 30));
+        jPanel_editorial.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 90, 30));
 
         jTextField_id_editorial.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField_id_editorial.setForeground(new java.awt.Color(0, 0, 153));
@@ -109,12 +121,17 @@ public class FormMenu extends javax.swing.JFrame {
                 jTextField_id_editorialActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jTextField_id_editorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 230, -1));
+        jTextField_id_editorial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_id_editorialKeyPressed(evt);
+            }
+        });
+        jPanel_editorial.add(jTextField_id_editorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 153));
         jLabel5.setText("Nombre:");
-        jPanel_editorial.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 90, 30));
+        jPanel_editorial.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 90, 30));
 
         jTextField_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField_nombre.setForeground(new java.awt.Color(0, 0, 153));
@@ -123,7 +140,12 @@ public class FormMenu extends javax.swing.JFrame {
                 jTextField_nombreActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jTextField_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 230, -1));
+        jTextField_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_nombreKeyPressed(evt);
+            }
+        });
+        jPanel_editorial.add(jTextField_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 110, -1));
 
         jButton_limpiar.setBackground(new java.awt.Color(0, 0, 102));
         jButton_limpiar.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,7 +155,7 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_limpiarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 100, -1));
+        jPanel_editorial.add(jButton_limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 100, -1));
 
         jButton_guardar.setBackground(new java.awt.Color(0, 0, 102));
         jButton_guardar.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,7 +165,7 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_guardarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 100, -1));
+        jPanel_editorial.add(jButton_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 100, -1));
 
         jButton_eliminar.setBackground(new java.awt.Color(0, 0, 102));
         jButton_eliminar.setForeground(new java.awt.Color(255, 255, 255));
@@ -153,7 +175,7 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_eliminarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 100, -1));
+        jPanel_editorial.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 100, -1));
 
         jButton_buscar.setBackground(new java.awt.Color(0, 0, 102));
         jButton_buscar.setForeground(new java.awt.Color(255, 255, 255));
@@ -163,7 +185,32 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_buscarActionPerformed(evt);
             }
         });
-        jPanel_editorial.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 100, -1));
+        jPanel_editorial.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 100, -1));
+
+        jButton_actualizar.setBackground(new java.awt.Color(0, 0, 102));
+        jButton_actualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_actualizar.setText("Actualizar");
+        jButton_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_actualizarActionPerformed(evt);
+            }
+        });
+        jPanel_editorial.add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 100, -1));
+
+        jTable_Editorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable_Editorial);
+
+        jPanel_editorial.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 370, 180));
 
         jTabbedPane1.addTab("Editorial", jPanel_editorial);
 
@@ -202,7 +249,7 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jButton_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cerrar_sesionActionPerformed
         // TODO add your handling code here:
-        
+
         System.exit(0);
         System.out.println("Se cerro seción correctamente");
     }//GEN-LAST:event_jButton_cerrar_sesionActionPerformed
@@ -223,71 +270,207 @@ public class FormMenu extends javax.swing.JFrame {
         String nombre = jTextField_nombre.getText().trim();
 
         //validamos que no esten vacíos
-        if ( id_Text.isEmpty() || nombre.isEmpty()) {
-            System.out.println("Ya estan vacias");
+        if (id_Text.isEmpty() && nombre.isEmpty()) {
+            System.out.println("Los campos ya están vacíos");
         } else {
             //si el id esta vacio significa que el nombre si tiene y tenemos que limpiarlo
             jTextField_id_editorial.setText("");
             jTextField_nombre.setText("");
-            System.out.println("Ya se limpio");
+            System.out.println("Los campos se han limpiado correctamente");
         }
-           
-        
+
+
     }//GEN-LAST:event_jButton_limpiarActionPerformed
 
     private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
         // TODO add your handling code here:
         //obtenemos el texto de los campos 
-       // String id_Text = jTextField_id_editorial.getText().trim();
+        // String id_Text = jTextField_id_editorial.getText().trim();
         String nombre = jTextField_nombre.getText().trim();
 
         //validamos que no esten vacíos
-        if ( nombre.isEmpty()) {
+        if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese el nombre");
         } else {
-            
+
             //try {
-                // Convertir el ID a entero después de la validación
-               // int id = Integer.parseInt(id_Text);
+            // Convertir el ID a entero después de la validación
+            // int id = Integer.parseInt(id_Text);
+            // Aquí puedes continuar con tu lógica, como guardar los datos
+            ControlEditorial controlEditorial = new ControlEditorial();
+            Editorial editorial = new Editorial();
 
-                // Aquí puedes continuar con tu lógica, como guardar los datos
-                ControlEditorial controlEditorial = new ControlEditorial();
-                Editorial editorial = new Editorial();
+            //revisar si no hay problema porque es int y no string
+            //  editorial.setId_editorial(id);
+            editorial.setNombre(nombre);
 
-                //revisar si no hay problema porque es int y no string
-              //  editorial.setId_editorial(id);
-                editorial.setNombre(nombre);
-                
-                if (controlEditorial.guardar(editorial)) {
-                    JOptionPane.showMessageDialog(null, "*** Editorial Registrada   ***");
-                    //cargar la tabla de vehiculos
+            if (controlEditorial.guardar(editorial)) {
+                JOptionPane.showMessageDialog(null, "*** Editorial Registrada   ***");
+                //cargar la tabla de vehiculos
 
-                    //-----
-                    //Limpiar campos 
-                    jTextField_nombre.setText("");
-                    jTextField_nombre.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al registrar una editorial");
-                }
-                
+                this.CargarTablaEditorial();
+
+                //-----
+                //Limpiar campos 
+                jTextField_nombre.setText("");
+                jTextField_nombre.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al registrar una editorial");
+            }
+
             //} catch (NumberFormatException e) {
-                // Manejar el caso en que el ID no sea un número válido
-                JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.");
+            // Manejar el caso en que el ID no sea un número válido
+            //JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.");
             //}
         }
-        
+
 
     }//GEN-LAST:event_jButton_guardarActionPerformed
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
         // TODO add your handling code here:
         //aqui vamos a querer eliminar uno de los registros
+        // Obtener el ID de la editorial y el nombre a eliminar
+    String id_Text = jTextField_id_editorial.getText().trim();
+    String nombre = jTextField_nombre.getText().trim();
+
+    // Validar que al menos uno de los campos (ID o nombre) esté lleno
+    if (id_Text.isEmpty() && nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese ID o Nombre de la editorial que desea eliminar.");
+        return;
+    }
+
+    int id_editorial = 0; // Inicializar ID a 0 por defecto
+    try {
+        if (!id_Text.isEmpty()) {
+            id_editorial = Integer.parseInt(id_Text); // Convertir el ID a entero
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El ID de la editorial debe ser un número válido.");
+        return;
+    }
+
+    // Confirmar la eliminación
+    String mensajeConfirmacion = "¿Está seguro de que desea eliminar la editorial?";
+    if (!id_Text.isEmpty()) {
+        mensajeConfirmacion += "\nID: " + id_editorial;
+    }
+    if (!nombre.isEmpty()) {
+        mensajeConfirmacion += "\nNombre: " + nombre;
+    }
+    int confirm = JOptionPane.showConfirmDialog(null, mensajeConfirmacion, "Confirmación", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Llamar al método para eliminar la editorial
+        ControlEditorial controleditorial = new ControlEditorial();
+        boolean eliminado = controleditorial.eliminarEditorial(id_editorial, nombre);
+
+        if (eliminado) {
+            JOptionPane.showMessageDialog(null, "La editorial ha sido eliminada exitosamente.");
+            this.CargarTablaEditorial(); // Actualizar la tabla
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar la editorial. Verifique los datos.");
+        }
+    }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
-        // TODO add your handling code here:
+
+        // Manejo de excepciones para convertir el ID
+        int id_editorial = 0; // Inicializar a 0 por defecto
+        try {
+            if (!jTextField_id_editorial.getText().trim().isEmpty()) {
+                id_editorial = Integer.parseInt(jTextField_id_editorial.getText().trim());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El ID de la editorial debe ser un número entero válido.");
+            return;
+        }
+
+        String nombre = jTextField_nombre.getText().trim();
+
+        // Validar si no se ingresó ni ID ni nombre
+        if (id_editorial <= 0 && nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese ID o Nombre para la búsqueda.");
+            this.CargarTablaEditorial(); // Cargar toda la tabla en caso de que no haya búsqueda
+        } else {
+            // Lógica de búsqueda
+            ControlEditorial controleditorial = new ControlEditorial();
+            controleditorial.buscarEditorialytodo(id_editorial, nombre);
+            ArrayList<Editorial> listaEditoriales = controleditorial.listaEditoriales;
+
+            // Obtener el modelo de la tabla actual para actualizar
+            DefaultTableModel model = (DefaultTableModel) jTable_Editorial.getModel();
+            model.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas
+
+            Object fila[] = new Object[2];
+            for (Editorial editorial : listaEditoriales) {
+                fila[0] = editorial.getId_editorial();
+                fila[1] = editorial.getNombre();
+                model.addRow(fila); // Agregar cada fila al modelo
+            }
+
+            // Actualizar la vista de la tabla
+            this.jTable_Editorial.setModel(model);
+            this.jScrollPane1.setViewportView(this.jTable_Editorial);
+        }
         
+        //Limpiar el texto 
+        jTextField_id_editorial.setText("");
+        jTextField_nombre.setText("");
+
     }//GEN-LAST:event_jButton_buscarActionPerformed
+
+    private void jTextField_id_editorialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_id_editorialKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            jTextField_nombre.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField_id_editorialKeyPressed
+
+    private void jTextField_nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_nombreKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            jButton_guardar.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField_nombreKeyPressed
+
+    private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
+        // TODO add your handling code here:
+        // Obtener el ID de la editorial y el nuevo nombre a actualizar
+    String id_Text = jTextField_id_editorial.getText().trim();
+    String nuevoNombre = jTextField_nombre.getText().trim();
+
+    // Validar que el ID y el nuevo nombre no estén vacíos
+    if (id_Text.isEmpty() || nuevoNombre.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese tanto el ID como el nuevo nombre para actualizar.");
+        return;
+    }
+
+    int id_editorial;
+    try {
+        id_editorial = Integer.parseInt(id_Text); // Convertir el ID a entero
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El ID de la editorial debe ser un número válido.");
+        return;
+    }
+
+    // Confirmar la actualización
+    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea actualizar la editorial con ID " + id_editorial + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Llamar al método para actualizar la editorial
+        ControlEditorial controleditorial = new ControlEditorial();
+        boolean actualizado = controleditorial.actualizarEditorial(id_editorial, nuevoNombre);
+
+        if (actualizado) {
+            JOptionPane.showMessageDialog(null, "La editorial ha sido actualizada exitosamente.");
+            this.CargarTablaEditorial(); // Actualizar la tabla
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar la editorial. Verifique los datos.");
+        }
+    }
+    }//GEN-LAST:event_jButton_actualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,16 +486,24 @@ public class FormMenu extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -325,6 +516,7 @@ public class FormMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_actualizar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JButton jButton_cerrar_sesion;
     private javax.swing.JButton jButton_eliminar;
@@ -341,8 +533,40 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel_editorial;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable_Editorial;
     private javax.swing.JTextField jTextField_id_editorial;
     private javax.swing.JTextField jTextField_nombre;
     // End of variables declaration//GEN-END:variables
+
+    //metodo para mostrar las editoriales 
+    private void CargarTablaEditorial() {
+        Connection cn = Conexion.connectar();
+        DefaultTableModel model = new DefaultTableModel();
+        String sql = "SELECT id_editorial, nombre FROM editorial;";
+        Statement st;
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            this.jTable_Editorial = new JTable(model);
+            this.jScrollPane1.setViewportView(this.jTable_Editorial);
+
+            model.addColumn("N°");
+            model.addColumn("Nombre");
+
+            while (rs.next()) {
+                Object fila[] = new Object[6];
+                for (int i = 0; i < 2; i++) {
+                    fila[i] = rs.getObject(i + 1);
+
+                }
+                model.addRow(fila);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al llenar la tabla de editorial: " + e);
+        }
+    }
+
 }

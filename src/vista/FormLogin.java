@@ -79,6 +79,9 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         jTextField_usuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_usuariosKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField_usuariosKeyTyped(evt);
             }
@@ -91,6 +94,9 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         jPasswordField_contraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField_contraseñaKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jPasswordField_contraseñaKeyTyped(evt);
             }
@@ -169,6 +175,20 @@ public class FormLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPasswordField_contraseñaKeyTyped
 
+    private void jTextField_usuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_usuariosKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()== evt.VK_ENTER){
+            jPasswordField_contraseña.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField_usuariosKeyPressed
+
+    private void jPasswordField_contraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField_contraseñaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()== evt.VK_ENTER){
+            this.IniciarSesion();
+        }
+    }//GEN-LAST:event_jPasswordField_contraseñaKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -232,7 +252,7 @@ private void IniciarSesion(){
         usuario.setClave(jPasswordField_contraseña.getText().trim());
         if(controlUsuario.login(usuario)){
             System.out.println("Inicio sesion correctamente");
-            JOptionPane.showMessageDialog(null, "Inicio sesion correctamente");
+           // JOptionPane.showMessageDialog(null, "Inicio sesion correctamente");
             
             FormMenu menu = new FormMenu();
             menu.setVisible(true);
