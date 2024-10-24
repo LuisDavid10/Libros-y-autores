@@ -8,10 +8,12 @@ public class Editorial {
     
     private int id_editorial;
     private String nombre;
+    private int id_usuario;
     
     public Editorial(){
         this.id_editorial = 0;
         this.nombre = "";
+        this.id_usuario = 0;
     }
 
     public int getId_editorial() {
@@ -30,9 +32,20 @@ public class Editorial {
         this.nombre = nombre;
     }
 
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
     @Override
     public String toString() {
-        return "Editorial{" + "id_editorial=" + id_editorial + ", nombre=" + nombre + '}';
+        return "Editorial{" + "id_editorial=" + id_editorial + ", nombre=" + nombre + ", id_usuario=" + id_usuario + '}';
     }
+    
+
+    
     
 }

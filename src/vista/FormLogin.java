@@ -4,6 +4,7 @@
  */
 package vista;
 
+import VariablesGlobales.GlobalVariables;
 import controlador.ControlUsuario;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
@@ -253,7 +254,12 @@ private void IniciarSesion(){
         if(controlUsuario.login(usuario)){
             System.out.println("Inicio sesion correctamente");
            // JOptionPane.showMessageDialog(null, "Inicio sesion correctamente");
+           
+           // Aquí guardarías el nombre del usuario en la variable global
+            GlobalVariables.nombreUsuario = usuario.getNombre(); // Supongamos que el nombre está en el objeto usuario
+            GlobalVariables.idUsuario = usuario.getId_usuarios();         // También puedes guardar el id del usuario si lo necesitas
             
+            // Abrir el menú principal
             FormMenu menu = new FormMenu();
             menu.setVisible(true);
             this.dispose();
@@ -261,6 +267,9 @@ private void IniciarSesion(){
             JOptionPane.showMessageDialog(null, "Usuario o clave incorrectos");
         }
     }
+    
+    
+    
 }
 
 

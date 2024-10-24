@@ -4,6 +4,7 @@
  */
 package vista;
 
+import VariablesGlobales.GlobalVariables;
 import conexion.Conexion;
 import javax.swing.JOptionPane;
 import controlador.ControlEditorial;
@@ -23,6 +24,8 @@ public class FormMenu extends javax.swing.JFrame {
      * Creates new form FormMenu
      */
     private int idEditorial = 0;
+    //private javax.swing.JLabel lblBienvenida;
+    
 
     public FormMenu() {
         initComponents();
@@ -31,6 +34,10 @@ public class FormMenu extends javax.swing.JFrame {
         this.setResizable(false);
         this.setTitle("Menu de Libros y Autores");
 
+        // Configurar el texto de lblBienvenida aquí
+       // lblBienvenida.setText("Bienvenido, " + GlobalVariables.nombreUsuario);
+
+        
         this.CargarTablaEditorial();
     }
 
@@ -65,6 +72,8 @@ public class FormMenu extends javax.swing.JFrame {
         jTable_Editorial = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -124,6 +133,9 @@ public class FormMenu extends javax.swing.JFrame {
         jTextField_id_editorial.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField_id_editorialKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_id_editorialKeyTyped(evt);
             }
         });
         jPanel_editorial.add(jTextField_id_editorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 100, -1));
@@ -242,6 +254,14 @@ public class FormMenu extends javax.swing.JFrame {
 
         jPanel2.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 600, 380));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Bienvenido ");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 300, -1));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 650, 550));
 
         pack();
@@ -254,12 +274,15 @@ public class FormMenu extends javax.swing.JFrame {
         System.out.println("Se cerro seción correctamente");
     }//GEN-LAST:event_jButton_cerrar_sesionActionPerformed
 
+    //caja de texto del nombre
     private void jTextField_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_nombreActionPerformed
 
+    //caja de texto del id_editorial
     private void jTextField_id_editorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_editorialActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField_id_editorialActionPerformed
 
     private void jButton_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_limpiarActionPerformed
@@ -472,6 +495,36 @@ public class FormMenu extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
+    private void jTextField_id_editorialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_id_editorialKeyTyped
+        // TODO add your handling code here:
+         char cantidadNumeros = evt.getKeyChar();
+    
+    // VALIDA QUE SOLO SEAN NÚMEROS
+    if (cantidadNumeros < '0' || cantidadNumeros > '9') {
+        evt.consume();  // Detiene la inserción del carácter si no es número
+    }
+    
+    // LIMITA A UNA LONGITUD DE 5 DÍGITOS
+    if (jTextField_id_editorial.getText().length() >= 5) {
+        evt.consume();
+    }
+    
+    // AUTOCOMPLETA CAMPOS MIENTRAS SE TECLEA UNA "ID" EN TIEMPO REAL
+    String idBusqueda = jTextField_id_editorial.getText().trim() + evt.getKeyChar();  // Agrega el carácter recién tecleado
+    
+    if (!idBusqueda.isEmpty()) {  // Mientras que no sea un texto en blanco en la ID
+        for (int i = 0; i < jTable_Editorial.getRowCount(); i++) {
+            String idTabla = jTable_Editorial.getValueAt(i, 0).toString();
+            
+            if (idBusqueda.equals(idTabla)) {
+                String nombreEditorial = jTable_Editorial.getValueAt(i, 1).toString();
+                jTextField_nombre.setText(nombreEditorial);  // Autocompleta el campo "nombre"
+                break;
+            }
+        }
+    }
+    }//GEN-LAST:event_jTextField_id_editorialKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -527,6 +580,7 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel_footer;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -536,6 +590,7 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_Editorial;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField_id_editorial;
     private javax.swing.JTextField jTextField_nombre;
     // End of variables declaration//GEN-END:variables

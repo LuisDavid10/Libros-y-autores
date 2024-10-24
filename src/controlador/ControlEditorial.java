@@ -1,5 +1,6 @@
 package controlador;
 
+import VariablesGlobales.GlobalVariables;
 import conexion.Conexion;
 import modelo.Editorial;
 import java.sql.*;
@@ -10,6 +11,41 @@ import java.util.ArrayList;
  * @author luis_
  */
 public class ControlEditorial {
+    
+//    // Método para registrar el ingreso de un libro
+//public boolean guardar(Editorial objeto) {
+//    boolean respuesta = false;
+//    java.sql.Connection cn = Conexion.connectar();
+//
+//    try {
+//        // Preparamos la consulta para insertar un nuevo registro en la tabla editorial
+//        PreparedStatement consulta = cn.prepareStatement(
+//            "INSERT INTO public.editorial(nombre, id_usuario) VALUES (?, ?);"
+//        );
+//
+//        consulta.setString(1, objeto.getNombre()); // Establecemos el nombre
+//        consulta.setInt(2, GlobalVariables.idUsuario); // Establecemos el id del usuario logueado
+//
+//        // Ejecutamos la consulta y verificamos si se insertó correctamente
+//        if (consulta.executeUpdate() > 0) {
+//            respuesta = true;
+//        }
+//
+//    } catch (SQLException e) {
+//        System.out.println("Error al registrar el ingreso de la editorial: " + e);
+//    } finally {
+//        // Asegúrate de cerrar la conexión en un bloque finally
+//        try {
+//            if (cn != null) {
+//                cn.close();
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error al cerrar la conexión: " + e);
+//        }
+//    }
+//    return respuesta;
+//}
+
 
     //metodo para registrar el ingreso de un libro
     public boolean guardar(Editorial objeto) {
@@ -22,6 +58,7 @@ public class ControlEditorial {
 
             //consulta.setInt(1, 0);//id
             consulta.setString(1, objeto.getNombre()); // Solo establecemos el nombre
+            //consulta.setInt(2, GlobalVariables.idUsuario);
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
