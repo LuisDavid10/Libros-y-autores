@@ -54,17 +54,18 @@ public class ControlEditorial {
         // Connection cn = Conexion.connectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT INTO public.editorial(nombre) VALUES (?);");
+            PreparedStatement consulta = cn.prepareStatement("INSERT INTO public.editorial(nombre, id_usuario) VALUES (?,?);");
 
             //consulta.setInt(1, 0);//id
             consulta.setString(1, objeto.getNombre()); // Solo establecemos el nombre
-            //consulta.setInt(2, GlobalVariables.idUsuario);
+            consulta.setInt(2, GlobalVariables.idUsuario);
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
             }
 
         } catch (SQLException e) {
+            System.out.println("Otra vez caiste");
             System.out.println("Error al registrar el ingreso de la editorial: " + e);
         }
         return respuesta;

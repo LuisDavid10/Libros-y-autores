@@ -33,6 +33,8 @@ public class FormMenu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Menu de Libros y Autores");
+        
+        System.out.println("Variables id y nombre"+ GlobalVariables.idUsuario + "+"+ GlobalVariables.nombreUsuario);
 
         // Configurar el texto de lblBienvenida aquí
        // lblBienvenida.setText("Bienvenido, " + GlobalVariables.nombreUsuario);
@@ -73,7 +75,7 @@ public class FormMenu extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField_nombreuuario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -259,8 +261,8 @@ public class FormMenu extends javax.swing.JFrame {
         jLabel6.setText("Bienvenido ");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 300, -1));
+        jTextField_nombreuuario.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jPanel2.add(jTextField_nombreuuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 300, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 650, 550));
 
@@ -310,6 +312,7 @@ public class FormMenu extends javax.swing.JFrame {
         //obtenemos el texto de los campos 
         // String id_Text = jTextField_id_editorial.getText().trim();
         String nombre = jTextField_nombre.getText().trim();
+        
 
         //validamos que no esten vacíos
         if (nombre.isEmpty()) {
@@ -326,6 +329,7 @@ public class FormMenu extends javax.swing.JFrame {
             //revisar si no hay problema porque es int y no string
             //  editorial.setId_editorial(id);
             editorial.setNombre(nombre);
+            //GlobalVariables.idUsuario;
 
             if (controlEditorial.guardar(editorial)) {
                 JOptionPane.showMessageDialog(null, "*** Editorial Registrada   ***");
@@ -590,9 +594,9 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_Editorial;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField_id_editorial;
     private javax.swing.JTextField jTextField_nombre;
+    private javax.swing.JTextField jTextField_nombreuuario;
     // End of variables declaration//GEN-END:variables
 
     //metodo para mostrar las editoriales 

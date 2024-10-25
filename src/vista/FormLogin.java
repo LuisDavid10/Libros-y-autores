@@ -254,7 +254,9 @@ private void IniciarSesion(){
         if(controlUsuario.login(usuario)){
             System.out.println("Inicio sesion correctamente");
            // JOptionPane.showMessageDialog(null, "Inicio sesion correctamente");
-           
+           System.out.println("Es la variable cuenta:"+ usuario.getCuenta());
+           System.out.println("Es la variable nombre: "+ usuario.getNombre());
+           System.out.println("Es la variable id_usuario: "+ usuario.getId_usuarios());
            // Aquí guardarías el nombre del usuario en la variable global
             GlobalVariables.nombreUsuario = usuario.getNombre(); // Supongamos que el nombre está en el objeto usuario
             GlobalVariables.idUsuario = usuario.getId_usuarios();         // También puedes guardar el id del usuario si lo necesitas
