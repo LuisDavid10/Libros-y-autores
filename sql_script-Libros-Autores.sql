@@ -140,3 +140,33 @@ CREATE TABLE usuarios (
     apaterno VARCHAR(255) NOT NULL,
     amaterno VARCHAR(255)
 );
+
+--Alteraciones en las tablas
+ALTER TABLE editorial
+ADD COLUMN id_usuario INT;
+
+ALTER TABLE editorial
+ADD CONSTRAINT fk_usuario_editorial
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -146,18 +146,44 @@ public class ControlEditorial {
         return respuesta;
     }
     
-    public boolean actualizarEditorial(int id, String nuevoNombre) {
+//    public boolean actualizarEditorial(int id, String nuevoNombre) {
+//    boolean respuesta = false;
+//    Connection cn = Conexion.connectar();
+//    
+//    try {
+//        // Crear la consulta para actualizar el nombre de la editorial
+//        String sql = "UPDATE public.editorial SET nombre = ? WHERE id_editorial = ?;";
+//        PreparedStatement consulta = cn.prepareStatement(sql);
+//        
+//        // Establecer los parámetros (nuevo nombre y id)
+//        consulta.setString(1, nuevoNombre);
+//        consulta.setInt(2, id);
+//        
+//        // Ejecutar la consulta de actualización
+//        if (consulta.executeUpdate() > 0) {
+//            respuesta = true; // Si la operación fue exitosa
+//        }
+//
+//    } catch (SQLException e) {
+//        System.out.println("Error al actualizar la editorial: " + e);
+//    }
+//    
+//    return respuesta;
+//}
+    
+    public boolean actualizarEditorial(int id, String nuevoNombre, int idUsuario) {
     boolean respuesta = false;
     Connection cn = Conexion.connectar();
     
     try {
-        // Crear la consulta para actualizar el nombre de la editorial
-        String sql = "UPDATE public.editorial SET nombre = ? WHERE id_editorial = ?;";
+        // Crear la consulta para actualizar el nombre y el id_usuario de la editorial
+        String sql = "UPDATE public.editorial SET nombre = ?, id_usuario = ? WHERE id_editorial = ?;";
         PreparedStatement consulta = cn.prepareStatement(sql);
         
-        // Establecer los parámetros (nuevo nombre y id)
+        // Establecer los parámetros (nuevo nombre, id_usuario y id_editorial)
         consulta.setString(1, nuevoNombre);
-        consulta.setInt(2, id);
+        consulta.setInt(2, idUsuario);
+        consulta.setInt(3, id);
         
         // Ejecutar la consulta de actualización
         if (consulta.executeUpdate() > 0) {
@@ -166,10 +192,17 @@ public class ControlEditorial {
 
     } catch (SQLException e) {
         System.out.println("Error al actualizar la editorial: " + e);
+    } finally {
+        try {
+            if (cn != null) cn.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión: " + e);
+        }
     }
     
     return respuesta;
 }
+
 
 
 }
