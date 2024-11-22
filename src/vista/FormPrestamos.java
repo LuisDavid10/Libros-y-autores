@@ -17,17 +17,15 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author luis_
  */
-public class FormMenu extends javax.swing.JFrame {
-
+public class FormPrestamos extends javax.swing.JFrame {
+    
     DefaultTableModel modelo = new DefaultTableModel();
-
+    
     Calendar fecha_actual = new GregorianCalendar();
     /**
      * Creates new form FormMenu
@@ -35,29 +33,30 @@ public class FormMenu extends javax.swing.JFrame {
     private int idEditorial = 0;
     //private javax.swing.JLabel lblBienvenida;
 
-    public FormMenu() {
+    public FormPrestamos() {
         initComponents();
         this.setSize(900, 550);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Menu de Libros y Autores");
-
+        
         System.out.println("Variables id y nombre" + GlobalVariables.idUsuario + "+" + GlobalVariables.nombreUsuario);
 
         // Configurar el texto de lblBienvenida aquí
         // lblBienvenida.setText("Bienvenido, " + GlobalVariables.nombreUsuario);
         this.CargarTablaEditorial();
-        
         jTable_Editorial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_EditorialMouseClicked(evt);
 
+                
+                
             }
         });
-
+        
         //Para el Prestamo
-        jDate_Fecha_actual.setCalendar(fecha_actual);
-
+                jDate_Fecha_actual.setCalendar(fecha_actual);
+        
     }
 
     /**
@@ -153,11 +152,6 @@ public class FormMenu extends javax.swing.JFrame {
         jPanel2.add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, 280, -1));
 
         jTabbedPane1.setForeground(new java.awt.Color(0, 0, 153));
-        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jTabbedPane1StateChanged(evt);
-            }
-        });
 
         jPanel_editorial.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -367,20 +361,22 @@ public class FormMenu extends javax.swing.JFrame {
         });
         jPanel_Prestamos.add(jTextField_aMaterno_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 110, -1));
 
-        jTextField_nombre_trabajador.setSelectedTextColor(new java.awt.Color(204, 0, 51));
+        jTextField_nombre_trabajador.setForeground(new java.awt.Color(204, 0, 0));
+        jTextField_nombre_trabajador.setCaretColor(new java.awt.Color(0, 0, 204));
+        jTextField_nombre_trabajador.setDisabledTextColor(new java.awt.Color(102, 255, 102));
         jTextField_nombre_trabajador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_nombre_trabajadorActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_nombre_trabajador, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 250, -1));
+        jPanel_Prestamos.add(jTextField_nombre_trabajador, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 30, -1));
 
         jTextField_id_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_id_persona_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_id_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 200, -1));
+        jPanel_Prestamos.add(jTextField_id_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 130, -1));
 
         jTextField_nombre_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,11 +407,6 @@ public class FormMenu extends javax.swing.JFrame {
         jPanel_Prestamos.add(jTextField_aMaterno_persona_prestamo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 110, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
         jPanel_Prestamos.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 310, -1));
 
         jButton_guardar_prestamo.setBackground(new java.awt.Color(0, 0, 102));
@@ -441,7 +432,7 @@ public class FormMenu extends javax.swing.JFrame {
         jDate_Fecha_actual.setDateFormatString("dd-MMM-yyyy");
         jPanel_Prestamos.add(jDate_Fecha_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, -1, -1));
 
-        jTabbedPane1.addTab("Prestamos", jPanel_Prestamos);
+        jTabbedPane1.addTab("Reservaciones", jPanel_Prestamos);
 
         jPanel2.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 600, 430));
 
@@ -489,7 +480,7 @@ public class FormMenu extends javax.swing.JFrame {
             jTextField_nombre.setText("");
             System.out.println("Los campos se han limpiado correctamente");
         }
-
+        
 
     }//GEN-LAST:event_jButton_limpiarActionPerformed
 
@@ -535,7 +526,7 @@ public class FormMenu extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.");
             //}
         }
-
+        
 
     }//GEN-LAST:event_jButton_guardarActionPerformed
 
@@ -551,7 +542,7 @@ public class FormMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese ID o Nombre de la editorial que desea eliminar.");
             return;
         }
-
+        
         int id_editorial = 0; // Inicializar ID a 0 por defecto
         try {
             if (!id_Text.isEmpty()) {
@@ -571,12 +562,12 @@ public class FormMenu extends javax.swing.JFrame {
             mensajeConfirmacion += "\nNombre: " + nombre;
         }
         int confirm = JOptionPane.showConfirmDialog(null, mensajeConfirmacion, "Confirmación", JOptionPane.YES_NO_OPTION);
-
+        
         if (confirm == JOptionPane.YES_OPTION) {
             // Llamar al método para eliminar la editorial
             ControlEditorial controleditorial = new ControlEditorial();
             boolean eliminado = controleditorial.eliminarEditorial(id_editorial, nombre);
-
+            
             if (eliminado) {
                 JOptionPane.showMessageDialog(null, "La editorial ha sido eliminada exitosamente.");
                 this.CargarTablaEditorial(); // Actualizar la tabla
@@ -598,7 +589,7 @@ public class FormMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID de la editorial debe ser un número entero válido.");
             return;
         }
-
+        
         String nombre = jTextField_nombre.getText().trim();
 
         // Validar si no se ingresó ni ID ni nombre
@@ -658,7 +649,7 @@ public class FormMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese tanto el ID como el nuevo nombre para actualizar.");
             return;
         }
-
+        
         int id_editorial;
         try {
             id_editorial = Integer.parseInt(id_Text); // Convertir el ID a entero
@@ -666,18 +657,18 @@ public class FormMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID de la editorial debe ser un número válido.");
             return;
         }
-
+        
         int idUsuario = GlobalVariables.idUsuario;
 
         // Confirmar la actualización
         int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea actualizar la editorial con ID " + id_editorial + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
+        
         if (confirm == JOptionPane.YES_OPTION) {
             // Llamar al método para actualizar la editorial
             ControlEditorial controleditorial = new ControlEditorial();
             //boolean actualizado = controleditorial.actualizarEditorial(id_editorial, nuevoNombre);
             boolean actualizado = controleditorial.actualizarEditorial(id_editorial, nuevoNombre, idUsuario);
-
+            
             if (actualizado) {
                 JOptionPane.showMessageDialog(null, "La editorial ha sido actualizada exitosamente.");
                 this.CargarTablaEditorial(); // Actualizar la tabla
@@ -707,7 +698,7 @@ public class FormMenu extends javax.swing.JFrame {
         if (!idBusqueda.isEmpty()) {  // Mientras que no sea un texto en blanco en la ID
             for (int i = 0; i < jTable_Editorial.getRowCount(); i++) {
                 String idTabla = jTable_Editorial.getValueAt(i, 0).toString();
-
+                
                 if (idBusqueda.equals(idTabla)) {
                     String nombreEditorial = jTable_Editorial.getValueAt(i, 1).toString();
                     jTextField_nombre.setText(nombreEditorial);  // Autocompleta el campo "nombre"
@@ -800,19 +791,6 @@ public class FormMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_quitar_prestamoActionPerformed
 
-    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        // TODO add your handling code here:
-        
-         System.out.println("Panel de préstamos enfocado");
-         
-    setDato(GlobalVariables.nombreUsuario);
-    }//GEN-LAST:event_jTabbedPane1StateChanged
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -827,31 +805,32 @@ public class FormMenu extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class
+            java.util.logging.Logger.getLogger(FormPrestamos.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class
+            java.util.logging.Logger.getLogger(FormPrestamos.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class
+            java.util.logging.Logger.getLogger(FormPrestamos.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormMenu.class
+            java.util.logging.Logger.getLogger(FormPrestamos.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMenu().setVisible(true);
+                new FormPrestamos().setVisible(true);
             }
         });
     }
@@ -915,20 +894,20 @@ public class FormMenu extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(sql);
             this.jTable_Editorial = new JTable(model);
             this.jScrollPane1.setViewportView(this.jTable_Editorial);
-
+            
             model.addColumn("N°");
             model.addColumn("Nombre");
             model.addColumn("Id Usuario");
-
+            
             while (rs.next()) {
                 Object fila[] = new Object[3];
                 for (int i = 0; i < 3; i++) {
                     fila[i] = rs.getObject(i + 1);
-
+                    
                 }
                 model.addRow(fila);
             }
-
+            
         } catch (SQLException e) {
             System.out.println("Error al llenar la tabla de editorial: " + e);
         }
@@ -937,10 +916,19 @@ public class FormMenu extends javax.swing.JFrame {
     //Metodos para el Prestamo
     public void setDato(String dato) {
         GlobalVariables.nombreUsuario = dato;
-        System.out.println("El dato es: " + dato);
-        jTextField_nombre_trabajador.setText(dato);
+        System.out.println("El dato es: " +dato);
+        jTextField_nombre.setText(dato);
     }
     
-    
+   private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {
+    // Agrega tu código aquí
+    int selectedIndex = jTabbedPane1.getSelectedIndex();
+    if (selectedIndex == 1) { // Verifica si la pestaña de 'Préstamos' está seleccionada
+        System.out.println("Pestaña de préstamos seleccionada");
+        setDato("Texto de prueba para mostrar en el JTextField");
+    }
+}
 
+    
+    
 }

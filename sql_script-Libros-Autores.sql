@@ -150,23 +150,58 @@ ADD CONSTRAINT fk_usuario_editorial
 FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
 
+ALTER TABLE persona
+ADD COLUMN id_usuario INT UNIQUE, -- Relación uno a uno
+ADD CONSTRAINT fk_persona_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+ALTER TABLE persona ALTER COLUMN id_persona SET DEFAULT nextval('persona_id_persona_seq');
 
 
 
+ALTER TABLE genero
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_genero_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+ALTER TABLE autor
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_autor_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+ALTER TABLE idioma
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_idioma_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+ALTER TABLE libro
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_libro_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
 
+ALTER TABLE prestamo
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_prestamo_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
 
+ALTER TABLE estado
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_estado_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
+ALTER TABLE ciudad
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_ciudad_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
+ALTER TABLE colonia
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_colonia_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
-
-
-
-
-
-
-
-
-
-
+ALTER TABLE domicilio
+ADD COLUMN id_usuario INT UNIQUE,
+ADD CONSTRAINT fk_domicilio_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
