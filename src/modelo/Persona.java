@@ -11,22 +11,28 @@ package modelo;
 public class Persona {
     //Atributos
     private int id_persona;
-    private String nombres;
+    private String nombre;
     private String aPaterno;
     private String aMaterno;
     private String telefono;
-    private String Correo;
+    private String correo;
     private int edad;
+    private int id_usuario;
 
     
-    public Persona(int id_persona, String nombres, String aPaterno, String aMaterno, String Telefono, String Correo, int edad) {
+    public Persona() {
+}
+
+    
+    public Persona(int id_persona, String nombres, String aPaterno, String aMaterno, String Telefono, String Correo, int edad, int id_ususario) {
         this.id_persona = id_persona;
-        this.nombres = nombres;
+        this.nombre = nombres;
         this.aPaterno = aPaterno;
         this.aMaterno = aMaterno;
         this.telefono = Telefono;
-        this.Correo = Correo;
+        this.correo = Correo;
         this.edad = edad;
+        this.id_usuario = id_ususario;
     }
 
     public int getId_persona() {
@@ -37,13 +43,15 @@ public class Persona {
         this.id_persona = id_persona;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    
 
     public String getaPaterno() {
         return aPaterno;
@@ -70,11 +78,11 @@ public class Persona {
     }
 
     public String getCorreo() {
-        return Correo;
+        return correo;
     }
 
     public void setCorreo(String Correo) {
-        this.Correo = Correo;
+        this.correo = Correo;
     }
 
     public int getEdad() {
@@ -85,10 +93,22 @@ public class Persona {
         this.edad = edad;
     }
 
+    
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
     @Override
     public String toString() {
-        return "Persona{" + "id_persona=" + id_persona + ", nombres=" + nombres + ", aPaterno=" + aPaterno + ", aMaterno=" + aMaterno + ", Telefono=" + telefono + ", Correo=" + Correo + ", edad=" + edad + '}';
+        return "Persona{" + "id_persona=" + id_persona + ", nombre=" + nombre + ", aPaterno=" + aPaterno + ", aMaterno=" + aMaterno + ", telefono=" + telefono + ", correo=" + correo + ", edad=" + edad + ", id_usuario=" + id_usuario + '}';
     }
+    
+    
+
     
     
 }

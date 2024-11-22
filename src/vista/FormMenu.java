@@ -8,6 +8,7 @@ import VariablesGlobales.GlobalVariables;
 import conexion.Conexion;
 import javax.swing.JOptionPane;
 import controlador.ControlEditorial;
+import controlador.ControlPrestamo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import modelo.Editorial;
@@ -19,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import modelo.Persona;
 
 /**
  *
@@ -47,7 +49,7 @@ public class FormMenu extends javax.swing.JFrame {
         // Configurar el texto de lblBienvenida aquí
         // lblBienvenida.setText("Bienvenido, " + GlobalVariables.nombreUsuario);
         this.CargarTablaEditorial();
-        
+
         jTable_Editorial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_EditorialMouseClicked(evt);
@@ -105,13 +107,13 @@ public class FormMenu extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_Editorial1 = new javax.swing.JTable();
-        jTextField_aMaterno_persona_prestamo = new javax.swing.JTextField();
+        jTextField_fecha_prestamo = new javax.swing.JTextField();
         jTextField_nombre_trabajador = new javax.swing.JTextField();
         jTextField_id_persona_prestamo = new javax.swing.JTextField();
-        jTextField_nombre_persona_prestamo = new javax.swing.JTextField();
+        jTextField_numero_prestamo = new javax.swing.JTextField();
         jTextField_aPaterno_persona_prestamo = new javax.swing.JTextField();
-        jTextField_nombre_persona_prestamo1 = new javax.swing.JTextField();
-        jTextField_aMaterno_persona_prestamo1 = new javax.swing.JTextField();
+        jTextField_nombre_persona_prestamo = new javax.swing.JTextField();
+        jTextField_aMaterno_persona_prestamo = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton_guardar_prestamo = new javax.swing.JButton();
         jButton_quitar_prestamo = new javax.swing.JButton();
@@ -360,34 +362,41 @@ public class FormMenu extends javax.swing.JFrame {
 
         jPanel_Prestamos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 440, 140));
 
-        jTextField_aMaterno_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_fecha_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_aMaterno_persona_prestamoActionPerformed(evt);
+                jTextField_fecha_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_aMaterno_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 110, -1));
+        jPanel_Prestamos.add(jTextField_fecha_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 110, -1));
 
+        jTextField_nombre_trabajador.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField_nombre_trabajador.setForeground(new java.awt.Color(255, 255, 255));
         jTextField_nombre_trabajador.setSelectedTextColor(new java.awt.Color(204, 0, 51));
         jTextField_nombre_trabajador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_nombre_trabajadorActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_nombre_trabajador, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 250, -1));
+        jPanel_Prestamos.add(jTextField_nombre_trabajador, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 100, -1));
 
         jTextField_id_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_id_persona_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_id_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 200, -1));
-
-        jTextField_nombre_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_nombre_persona_prestamoActionPerformed(evt);
+        jTextField_id_persona_prestamo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_id_persona_prestamoKeyTyped(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_nombre_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 100, -1));
+        jPanel_Prestamos.add(jTextField_id_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 200, -1));
+
+        jTextField_numero_prestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_numero_prestamoActionPerformed(evt);
+            }
+        });
+        jPanel_Prestamos.add(jTextField_numero_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 100, -1));
 
         jTextField_aPaterno_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,19 +405,19 @@ public class FormMenu extends javax.swing.JFrame {
         });
         jPanel_Prestamos.add(jTextField_aPaterno_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 110, -1));
 
-        jTextField_nombre_persona_prestamo1.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_nombre_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_nombre_persona_prestamo1ActionPerformed(evt);
+                jTextField_nombre_persona_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_nombre_persona_prestamo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 100, -1));
+        jPanel_Prestamos.add(jTextField_nombre_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 100, -1));
 
-        jTextField_aMaterno_persona_prestamo1.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_aMaterno_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_aMaterno_persona_prestamo1ActionPerformed(evt);
+                jTextField_aMaterno_persona_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_aMaterno_persona_prestamo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 110, -1));
+        jPanel_Prestamos.add(jTextField_aMaterno_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 110, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -438,6 +447,8 @@ public class FormMenu extends javax.swing.JFrame {
         });
         jPanel_Prestamos.add(jButton_quitar_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 100, -1));
 
+        jDate_Fecha_actual.setBackground(new java.awt.Color(0, 0, 255));
+        jDate_Fecha_actual.setForeground(new java.awt.Color(255, 255, 255));
         jDate_Fecha_actual.setDateFormatString("dd-MMM-yyyy");
         jPanel_Prestamos.add(jDate_Fecha_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, -1, -1));
 
@@ -767,9 +778,9 @@ public class FormMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_guardar_prestamoActionPerformed
 
-    private void jTextField_aMaterno_persona_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_aMaterno_persona_prestamoActionPerformed
+    private void jTextField_fecha_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_fecha_prestamoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_aMaterno_persona_prestamoActionPerformed
+    }//GEN-LAST:event_jTextField_fecha_prestamoActionPerformed
 
     private void jTextField_nombre_trabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombre_trabajadorActionPerformed
         // TODO add your handling code here:
@@ -778,23 +789,24 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jTextField_id_persona_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_persona_prestamoActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextField_id_persona_prestamoActionPerformed
 
-    private void jTextField_nombre_persona_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombre_persona_prestamoActionPerformed
+    private void jTextField_numero_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_numero_prestamoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_nombre_persona_prestamoActionPerformed
+    }//GEN-LAST:event_jTextField_numero_prestamoActionPerformed
 
     private void jTextField_aPaterno_persona_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_aPaterno_persona_prestamoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_aPaterno_persona_prestamoActionPerformed
 
-    private void jTextField_nombre_persona_prestamo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombre_persona_prestamo1ActionPerformed
+    private void jTextField_nombre_persona_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombre_persona_prestamoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_nombre_persona_prestamo1ActionPerformed
+    }//GEN-LAST:event_jTextField_nombre_persona_prestamoActionPerformed
 
-    private void jTextField_aMaterno_persona_prestamo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_aMaterno_persona_prestamo1ActionPerformed
+    private void jTextField_aMaterno_persona_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_aMaterno_persona_prestamoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_aMaterno_persona_prestamo1ActionPerformed
+    }//GEN-LAST:event_jTextField_aMaterno_persona_prestamoActionPerformed
 
     private void jButton_quitar_prestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_quitar_prestamoActionPerformed
         // TODO add your handling code here:
@@ -802,16 +814,58 @@ public class FormMenu extends javax.swing.JFrame {
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         // TODO add your handling code here:
-        
-         System.out.println("Panel de préstamos enfocado");
-         
-    setDato(GlobalVariables.nombreUsuario);
+
+        System.out.println("Panel de préstamos enfocado");
+
+        setDato(GlobalVariables.nombreUsuario);
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextField_id_persona_prestamoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_id_persona_prestamoKeyTyped
+        // TODO add your handling code here:
+        char cantidadNumeros = evt.getKeyChar();
+
+        // VALIDA QUE SOLO SEAN NÚMEROS
+        if (cantidadNumeros < '0' || cantidadNumeros > '9') {
+            evt.consume();  // Detiene la inserción del carácter si no es número
+        }
+
+        // LIMITA A UNA LONGITUD DE 3 DÍGITOS
+        if (jTextField_id_persona_prestamo.getText().length() >= 3) {
+            evt.consume();
+        }
+
+        // Obtener el texto actualizado del campo (incluyendo la tecla recién presionada)
+        String idBusqueda = jTextField_id_persona_prestamo.getText().trim() + evt.getKeyChar();
+        
+        System.out.println("id_busqueda" + idBusqueda);
+
+        if (idBusqueda.length() <= 3) {
+            ControlPrestamo controlPrestamo = new ControlPrestamo();
+            Persona persona = controlPrestamo.buscarPersonaPorId(idBusqueda);
+            
+            System.out.println("La persoana esta dando: " + persona.toString());
+
+            if (persona != null) {
+                jTextField_nombre_persona_prestamo.setText(persona.getNombre());
+                jTextField_aPaterno_persona_prestamo.setText(persona.getaPaterno());
+                jTextField_aMaterno_persona_prestamo.setText(persona.getaMaterno());
+
+            } else {
+                // Limpiar los campos si no se encuentra la persona
+                jTextField_nombre_persona_prestamo.setText("");
+                jTextField_aPaterno_persona_prestamo.setText("");
+                jTextField_aMaterno_persona_prestamo.setText("");
+            }
+            System.out.println("El string dice:" + idBusqueda);
+
+
+    }//GEN-LAST:event_jTextField_id_persona_prestamoKeyTyped
+    }
 
     /**
      * @param args the command line arguments
@@ -894,14 +948,14 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JTable jTable_Editorial;
     private javax.swing.JTable jTable_Editorial1;
     private javax.swing.JTextField jTextField_aMaterno_persona_prestamo;
-    private javax.swing.JTextField jTextField_aMaterno_persona_prestamo1;
     private javax.swing.JTextField jTextField_aPaterno_persona_prestamo;
+    private javax.swing.JTextField jTextField_fecha_prestamo;
     private javax.swing.JTextField jTextField_id_editorial;
     private javax.swing.JTextField jTextField_id_persona_prestamo;
     private javax.swing.JTextField jTextField_nombre;
     private javax.swing.JTextField jTextField_nombre_persona_prestamo;
-    private javax.swing.JTextField jTextField_nombre_persona_prestamo1;
     private javax.swing.JTextField jTextField_nombre_trabajador;
+    private javax.swing.JTextField jTextField_numero_prestamo;
     // End of variables declaration//GEN-END:variables
 
     //metodo para mostrar las editoriales 
@@ -940,7 +994,5 @@ public class FormMenu extends javax.swing.JFrame {
         System.out.println("El dato es: " + dato);
         jTextField_nombre_trabajador.setText(dato);
     }
-    
-    
 
 }

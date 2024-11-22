@@ -19,6 +19,11 @@ public class Libro {
     private int año_publicacion;
     private float precio;
 
+    public Libro() {
+    }
+    
+    
+
     public Libro(int id_libro, int id_editorial, int id_idioma, String titulo, int numero_Paginas, int año_publicacion, float precio) {
         this.id_libro = id_libro;
         this.id_editorial = id_editorial;
