@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import modelo.Persona;
+import modelo.Prestamo;
 
 /**
  *
@@ -71,6 +72,10 @@ public class FormMenu extends javax.swing.JFrame {
         this.inicializarTablaPrestamos();
         this.cargarNPrestamo();
 
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"ID Préstamo", "Fecha Préstamo", "Fecha Devolución"}, 0
+        );
+        jTable_lista_prestamos.setModel(model);
     }
 
     /**
@@ -130,6 +135,8 @@ public class FormMenu extends javax.swing.JFrame {
         jDate_Fecha_actual = new com.toedter.calendar.JDateChooser();
         jDate_Fecha_devolucion = new com.toedter.calendar.JDateChooser();
         jButton_add_prestamo = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable_lista_prestamos = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -372,7 +379,7 @@ public class FormMenu extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable_lista_titulos);
 
-        jPanel_Prestamos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 440, 140));
+        jPanel_Prestamos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 440, 90));
 
         jTextField_nombre_trabajador.setBackground(new java.awt.Color(0, 0, 255));
         jTextField_nombre_trabajador.setForeground(new java.awt.Color(255, 255, 255));
@@ -396,12 +403,13 @@ public class FormMenu extends javax.swing.JFrame {
         });
         jPanel_Prestamos.add(jTextField_id_persona_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 200, -1));
 
+        jTextField_numero_prestamo.setBackground(new java.awt.Color(0, 51, 255));
         jTextField_numero_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_numero_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jTextField_numero_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 100, -1));
+        jPanel_Prestamos.add(jTextField_numero_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 60, -1));
 
         jTextField_aPaterno_persona_prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,6 +479,29 @@ public class FormMenu extends javax.swing.JFrame {
             }
         });
         jPanel_Prestamos.add(jButton_add_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 100, -1));
+
+        jTable_lista_prestamos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable_lista_prestamos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_lista_prestamosMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable_lista_prestamosMousePressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable_lista_prestamos);
+
+        jPanel_Prestamos.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 440, 90));
 
         jTabbedPane1.addTab("Prestamos", jPanel_Prestamos);
 
@@ -798,7 +829,7 @@ public class FormMenu extends javax.swing.JFrame {
         // TODO add your handling code here:                                           
         // Obtener datos de los campos de texto y fechas
         // Obtener las fechas de los JDateChooser
-        java.util.Date fechaPrestamoDate =  jDate_Fecha_actual.getDate();
+        java.util.Date fechaPrestamoDate = jDate_Fecha_actual.getDate();
         java.util.Date fechaDevolucionDate = jDate_Fecha_devolucion.getDate();
         int idPersona = Integer.parseInt(jTextField_id_persona_prestamo.getText().trim());
 
@@ -808,8 +839,7 @@ public class FormMenu extends javax.swing.JFrame {
             System.out.println("Fecha de prestamo " + fechaPrestamoDate);
             System.out.println("Fecha de devolucion " + fechaDevolucionDate);
             System.out.println("Fecha de idPersona " + idPersona);
-            
-            
+
             return;
         }
 
@@ -831,8 +861,6 @@ public class FormMenu extends javax.swing.JFrame {
             return;
         }
 
-
-
         // Obtener los títulos de los libros desde el JTable
         List<String> titulosLibros = new ArrayList<>();
         for (int i = 0; i < jTable_lista_titulos.getRowCount(); i++) {
@@ -844,6 +872,25 @@ public class FormMenu extends javax.swing.JFrame {
         if (controlPrestamo.guardarPrestamo(fechaPrestamo, fechaDevolucion, idPersona, titulosLibros)) {
             JOptionPane.showMessageDialog(null, "Préstamo registrado correctamente.");
             //this.CargarTablaPrestamos(); // Si tienes una tabla de préstamos, actualízala
+            cargarNPrestamo();
+            jTextField_id_persona_prestamo.setText("");
+            // Limpiar los campos si no se encuentra la persona
+
+            jTextField_nombre_persona_prestamo.setText("");
+            jTextField_aPaterno_persona_prestamo.setText("");
+            jTextField_aMaterno_persona_prestamo.setText("");
+            jTextField_id_persona_prestamo.setText("");
+
+            jDate_Fecha_devolucion.setDate(null);
+
+            // Limpiar la tabla y mostrar mensaje
+            DefaultTableModel model = (DefaultTableModel) jTable_lista_prestamos.getModel();
+            model.setRowCount(0);
+
+            // Limpiar la tabla y mostrar mensaje
+            DefaultTableModel modelito = (DefaultTableModel) jTable_lista_titulos.getModel();
+            modelito.setRowCount(0);
+
         } else {
             JOptionPane.showMessageDialog(null, "Error al registrar el préstamo.");
         }
@@ -952,6 +999,31 @@ public class FormMenu extends javax.swing.JFrame {
             jTextField_aPaterno_persona_prestamo.setText(persona.getaPaterno());
             jTextField_aMaterno_persona_prestamo.setText(persona.getaMaterno());
 
+            List<Prestamo> prestamos = control.buscarPrestamosPorPersona(persona.getId_persona());
+
+            if (!prestamos.isEmpty()) {
+                // Mostrar los préstamos en la tabla
+                DefaultTableModel model = (DefaultTableModel) jTable_lista_prestamos.getModel();
+                model.setRowCount(0); // Limpiar la tabla
+                for (Prestamo prestamo : prestamos) {
+                    model.addRow(new Object[]{prestamo.getId_prestamo(), prestamo.getFecha_prestamo(), prestamo.getFecha_devolucion()});
+                }
+            } else {
+                // Limpiar la tabla y mostrar mensaje
+                DefaultTableModel model = (DefaultTableModel) jTable_lista_prestamos.getModel();
+                model.setRowCount(0);
+                JOptionPane.showMessageDialog(this, "El usuario no tiene préstamos registrados.");
+            }
+
+//            if (tiene  {
+//                prestamo
+//            }
+//            
+//                ){
+//                mostrarla en la tabla 
+//            }else{
+//                        mostrar en la tabla sin prestamos
+//                    }
         } else {
             // SI NO EXISTE, MOSTRAR UN MENSAJE
             JOptionPane.showMessageDialog(
@@ -1005,6 +1077,14 @@ public class FormMenu extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton_add_prestamoActionPerformed
+
+    private void jTable_lista_prestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_lista_prestamosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_lista_prestamosMouseClicked
+
+    private void jTable_lista_prestamosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_lista_prestamosMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_lista_prestamosMousePressed
 
     /**
      * @param args the command line arguments
@@ -1085,8 +1165,10 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_editorial;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_Editorial;
+    private javax.swing.JTable jTable_lista_prestamos;
     private javax.swing.JTable jTable_lista_titulos;
     private javax.swing.JTextField jTextField_aMaterno_persona_prestamo;
     private javax.swing.JTextField jTextField_aPaterno_persona_prestamo;
@@ -1147,36 +1229,38 @@ public class FormMenu extends javax.swing.JFrame {
     }
 
     private void inicializarTablaPrestamos() {
-        // Crear un modelo con solo una columna "Título"
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Título"}, 0) {
+    // Crear un modelo con solo una columna "Título"
+    DefaultTableModel model = new DefaultTableModel(new Object[]{"Título"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
             // Hacer que las celdas no sean editables
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+            return false;
+        }
+    };
 
-        // Asignar el modelo al JTable
-        jTable_lista_titulos.setModel(model);
+    // Asignar el modelo al JTable
+    jTable_lista_titulos.setModel(model);
 
-        // Ajustar el ancho de las columnas para que se vea estético
-        jTable_lista_titulos.getColumnModel().getColumn(0).setPreferredWidth(200);
-        jTable_lista_titulos.getTableHeader().setReorderingAllowed(false); // Deshabilitar reordenamiento
-    }
-    
-    
-    // Este código debe estar en el lugar donde tienes el botón o la acción de cargar el próximo ID en el JTextField.
+    // Ajustar el ancho de la columna "Título" para mejor apariencia
+    jTable_lista_titulos.getColumnModel().getColumn(0).setPreferredWidth(200);
 
-private void cargarNPrestamo() {
-    // Crear una instancia de la clase ControlPrestamo
-    ControlPrestamo controlPrestamo = new ControlPrestamo();
-    
-    // Llamar al método para obtener el próximo ID de préstamo
-    int nextId = controlPrestamo.obtenerProximoIdPrestamo();
-    
-    // Asignar el valor al JTextField correspondiente
-    jTextField_numero_prestamo.setText(String.valueOf(nextId));
+    // Deshabilitar el reordenamiento de columnas
+    jTable_lista_titulos.getTableHeader().setReorderingAllowed(false);
 }
 
+    
+
+
+    // Este código debe estar en el lugar donde tienes el botón o la acción de cargar el próximo ID en el JTextField.
+    private void cargarNPrestamo() {
+        // Crear una instancia de la clase ControlPrestamo
+        ControlPrestamo controlPrestamo = new ControlPrestamo();
+
+        // Llamar al método para obtener el próximo ID de préstamo
+        int nextId = controlPrestamo.obtenerProximoIdPrestamo();
+
+        // Asignar el valor al JTextField correspondiente
+        jTextField_numero_prestamo.setText(String.valueOf(nextId));
+    }
 
 }

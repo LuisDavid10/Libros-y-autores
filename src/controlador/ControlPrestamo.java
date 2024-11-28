@@ -13,12 +13,58 @@ import modelo.Editorial;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Prestamo;
 
 /**
  *
  * @author luis_
  */
 public class ControlPrestamo {
+
+//    public Persona buscarPersonaPorId(String id) {
+//        Persona persona = null;
+//
+//        // Manejo seguro de recursos con try-with-resources
+//        try (Connection cn = Conexion.connectar(); PreparedStatement consulta = cn.prepareStatement(
+//                "SELECT id_persona, nombre, apaterno, amaterno, telefono, correo, edad, id_usuario "
+//                + "FROM persona WHERE id_persona = ?"
+//        )) {
+//
+//            // Validar que el ID sea un número entero
+//            int idPersona;
+//            try {
+//                idPersona = Integer.parseInt(id);
+//            } catch (NumberFormatException e) {
+//                System.out.println("El ID proporcionado no es válido: " + id);
+//                return null; // Retornar null si el ID no es válido
+//            }
+//
+//            consulta.setInt(1, idPersona);
+//            try (ResultSet rs = consulta.executeQuery()) {
+//                if (rs.next()) {
+//                    persona = new Persona();
+//                    persona.setId_persona(rs.getInt("id_persona"));
+//                    persona.setNombre(rs.getString("nombre"));
+//                    persona.setaPaterno(rs.getString("apaterno"));
+//                    persona.setaMaterno(rs.getString("amaterno"));
+//                    persona.setTelefono(rs.getString("telefono"));
+//                    persona.setCorreo(rs.getString("correo"));
+//                    persona.setEdad(rs.getInt("edad"));
+//                    persona.setId_usuario(rs.getInt("id_usuario"));
+//
+//                    // Imprimir información para depuración
+//                    System.out.println("El dato regresado es id: " + persona.getId_persona()
+//                            + ", el nombre es: " + persona.getNombre());
+//                    System.out.println("El toString: " + persona);
+//                }
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println("Error al buscar la persona por ID: " + e);
+//        }
+//
+//        return persona; // Retorna el objeto Persona o null si no se encuentra
+//    }
 
     // Método para buscar una persona por ID
     public Persona buscarPersonaPorId(String id) {
@@ -54,7 +100,6 @@ public class ControlPrestamo {
 
         return persona; // Retorna el objeto Persona o null si no se encuentra
     }
-
     // Método para obtener los títulos de los libros
     public ArrayList<String> obtenerTitulosDeLibros() {
         ArrayList<String> titulos = new ArrayList<>();
@@ -88,30 +133,53 @@ public class ControlPrestamo {
     public static void main(String[] args) {
         ControlPrestamo control = new ControlPrestamo();
 
-        // Llamamos al método para buscar la persona con el ID "1"
-        String id = "2"; // Prueba con un ID válido
-        Persona persona = control.buscarPersonaPorId(id);
+//        // Llamamos al método para buscar la persona con el ID "1"
+//        String id = "2"; // Prueba con un ID válido
+//        Persona persona = control.buscarPersonaPorId(id);
+//
+//        if (persona != null) {
+//            System.out.println("Persona encontrada: " + persona);
+//        } else {
+//            System.out.println("Persona no encontrada.");
+//        }
+//
+//        // Instancia de la clase que contiene el método obtenerTitulosDeLibros
+//        // MiClaseDeLibros claseDeLibros = new MiClaseDeLibros();
+//        // Llamar al método y obtener la lista de títulos
+//        ArrayList<String> titulos = control.obtenerTitulosDeLibros();
+//
+//        // Imprimir los títulos obtenidos
+//        if (titulos.isEmpty()) {
+//            System.out.println("No se encontraron libros en la base de datos.");
+//        } else {
+//            System.out.println("Títulos de libros encontrados:");
+//            for (String titulo : titulos) {
+//                System.out.println("- " + titulo);
+//            }
+//        }
+        
+        
+        
+    // Crear instancia de tu clase de control
+    ControlPrestamo controlPrestamo = new ControlPrestamo();
 
-        if (persona != null) {
-            System.out.println("Persona encontrada: " + persona);
-        } else {
-            System.out.println("Persona no encontrada.");
+    // ID del persona para buscar (ajusta según tus pruebas)
+    int idPersona = 1; // Cambiar según los datos de prueba
+
+    // Llamar al método buscarPrestamosPorUsuario
+    List<Prestamo> prestamos = controlPrestamo.buscarPrestamosPorPersona(idPersona);
+
+    // Mostrar resultados
+    if (prestamos.isEmpty()) {
+        System.out.println("No se encontraron préstamos para el usuario con ID: " + idPersona);
+    } else {
+        System.out.println("Préstamos encontrados para el usuario con ID: " + idPersona);
+        for (Prestamo prestamo : prestamos) {
+            System.out.println(prestamo);
         }
+    }
 
-        // Instancia de la clase que contiene el método obtenerTitulosDeLibros
-        // MiClaseDeLibros claseDeLibros = new MiClaseDeLibros();
-        // Llamar al método y obtener la lista de títulos
-        ArrayList<String> titulos = control.obtenerTitulosDeLibros();
 
-        // Imprimir los títulos obtenidos
-        if (titulos.isEmpty()) {
-            System.out.println("No se encontraron libros en la base de datos.");
-        } else {
-            System.out.println("Títulos de libros encontrados:");
-            for (String titulo : titulos) {
-                System.out.println("- " + titulo);
-            }
-        }
     }
 
     public boolean guardarPrestamo(java.sql.Date fechaPrestamo, java.sql.Date fechaDevolucion, int idPersona, List<String> titulosLibros) {
@@ -181,11 +249,9 @@ public class ControlPrestamo {
     public int obtenerProximoIdPrestamo() {
         int nextId = 0;
         String sql = "SELECT last_value + 1 AS next_id FROM prestamo_id_prestamo_seq";
-        
-        try (Connection cn = Conexion.connectar();
-             PreparedStatement ps = cn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            
+
+        try (Connection cn = Conexion.connectar(); PreparedStatement ps = cn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
             if (rs.next()) {
                 nextId = rs.getInt("next_id");
             }
@@ -193,7 +259,46 @@ public class ControlPrestamo {
             e.printStackTrace();
             System.out.println("Error al obtener el próximo ID: " + e.getMessage());
         }
-        
+
         return nextId;
     }
+
+    //Metodo para buscar en la base de datossi tiene prestamos 
+    // Buscar préstamos por ID de usuario
+    public List<Prestamo> buscarPrestamosPorPersona(int idPersona) {
+    List<Prestamo> prestamos = new ArrayList<>();
+    String sql = """
+        SELECT p.id_prestamo, p.fecha_prestamo, p.fecha_devolucion 
+        FROM prestamo p
+        INNER JOIN persona_prestamo pp ON p.id_prestamo = pp.id_prestamo
+        WHERE pp.id_persona = ?
+    """;
+
+    try (Connection cn = Conexion.connectar(); PreparedStatement ps = cn.prepareStatement(sql)) {
+        System.out.println("Buscando préstamos para la persona con ID: " + idPersona);
+        ps.setInt(1, idPersona);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Prestamo prestamo = new Prestamo(
+                        rs.getInt("id_prestamo"),
+                        rs.getDate("fecha_prestamo"),
+                        rs.getDate("fecha_devolucion")
+                );
+                prestamos.add(prestamo);
+
+                // Log para depuración
+                System.out.println("Préstamo encontrado: " + prestamo);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Error al buscar préstamos: " + e.getMessage());
+    }
+
+    // Log para ver la lista resultante
+    System.out.println("Préstamos devueltos para la persona con ID: " + idPersona + " -> " + prestamos);
+    return prestamos;
+}
+
 }

@@ -6,6 +6,7 @@ package modelo;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -16,14 +17,16 @@ public class Prestamo {
     
     //Atributos
     private int id_prestamo;
-    private LocalDate fecha_prestamo;
-    private LocalDate fecha_devolucion;
+    private Date fecha_prestamo;
+    private Date fecha_devolucion;
 
-    public Prestamo(int id_prestamo, LocalDate fecha_prestamo, LocalDate fecha_devolucion) {
+    public Prestamo(int id_prestamo, Date fecha_prestamo, Date fecha_devolucion) {
         this.id_prestamo = id_prestamo;
         this.fecha_prestamo = fecha_prestamo;
         this.fecha_devolucion = fecha_devolucion;
     }
+
+    
     
     
 
@@ -35,21 +38,23 @@ public class Prestamo {
         this.id_prestamo = id_prestamo;
     }
 
-    public LocalDate getFecha_prestamo() {
+    public Date getFecha_prestamo() {
         return fecha_prestamo;
     }
 
-    public void setFecha_prestamo(LocalDate fecha_prestamo) {
+    public void setFecha_prestamo(Date fecha_prestamo) {
         this.fecha_prestamo = fecha_prestamo;
     }
 
-    public LocalDate getFecha_devolucion() {
+    public Date getFecha_devolucion() {
         return fecha_devolucion;
     }
 
-    public void setFecha_devolucion(LocalDate fecha_devolucion) {
+    public void setFecha_devolucion(Date fecha_devolucion) {
         this.fecha_devolucion = fecha_devolucion;
     }
+
+    
 
     @Override
     public String toString() {
