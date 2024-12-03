@@ -301,4 +301,29 @@ public class ControlPrestamo {
     return prestamos;
 }
 
+    public List<String> buscarLibrosPorPrestamo(int idPrestamo) {
+    List<String> libros = new ArrayList<>();
+    String sql = """
+        SELECT l.titulo 
+        FROM libro l
+        INNER JOIN prestamo_libro pl ON l.id_libro = pl.id_libro
+        WHERE pl.id_prestamo = ?
+    """;
+
+    try (Connection cn = Conexion.connectar(); PreparedStatement ps = cn.prepareStatement(sql)) {
+        ps.setInt(1, idPrestamo);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                libros.add(rs.getString("titulo"));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Error al buscar libros: " + e.getMessage());
+    }
+
+    return libros;
+}
+
 }

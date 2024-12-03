@@ -23,6 +23,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import modelo.Persona;
 import modelo.Prestamo;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfPTable;
+import java.io.FileOutputStream;
+
+
 
 /**
  *
@@ -137,6 +151,7 @@ public class FormMenu extends javax.swing.JFrame {
         jButton_add_prestamo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable_lista_prestamos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -448,7 +463,7 @@ public class FormMenu extends javax.swing.JFrame {
                 jButton_guardar_prestamoActionPerformed(evt);
             }
         });
-        jPanel_Prestamos.add(jButton_guardar_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 100, -1));
+        jPanel_Prestamos.add(jButton_guardar_prestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 100, -1));
 
         jButton_quitar_prestamo.setBackground(new java.awt.Color(0, 0, 102));
         jButton_quitar_prestamo.setForeground(new java.awt.Color(255, 255, 255));
@@ -502,6 +517,14 @@ public class FormMenu extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTable_lista_prestamos);
 
         jPanel_Prestamos.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 440, 90));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgenes/images/impresora.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel_Prestamos.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, -1, -1));
 
         jTabbedPane1.addTab("Prestamos", jPanel_Prestamos);
 
@@ -1079,12 +1102,208 @@ public class FormMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_add_prestamoActionPerformed
 
     private void jTable_lista_prestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_lista_prestamosMouseClicked
-        // TODO add your handling code here:
+              // TODO add your handling code here:
+              
+    // Obtener la fila seleccionada
+    int filaSeleccionada = jTable_lista_prestamos.getSelectedRow();
+
+    if (filaSeleccionada >= 0) {
+        // Obtener el ID del préstamo seleccionado
+        int idPrestamo = (int) jTable_lista_prestamos.getValueAt(filaSeleccionada, 0);
+        
+        // Instanciar el controlador para buscar los libros
+        ControlPrestamo control = new ControlPrestamo();
+        List<String> libros = control.buscarLibrosPorPrestamo(idPrestamo);
+
+        // Actualizar la tabla de títulos
+        DefaultTableModel model = (DefaultTableModel) jTable_lista_titulos.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+
+        for (String libro : libros) {
+            model.addRow(new Object[]{libro});
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un préstamo.");
+    }
+              
+        // Obtener la fila seleccionada
+        // Comprobar que el evento se está capturando
+        System.out.println("Evento mouseClicked clickeado");
+
+       
+            System.out.println("No hay fila seleccionada.");
+              
     }//GEN-LAST:event_jTable_lista_prestamosMouseClicked
 
     private void jTable_lista_prestamosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_lista_prestamosMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable_lista_prestamosMousePressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+//        // TODO add your handling code here:
+
+  // Verificar si el campo está vacío
+    String idTexto = jTextField_id_persona_prestamo.getText().trim();
+
+    if (idTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El campo ID no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+                                       
+    Document documento = new Document();
+    
+    try {
+        // Obtener la ruta del escritorio del usuario
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(documento, 
+                new FileOutputStream(ruta + "/OneDrive/Documentos/" + 
+                        jTextField_nombre_persona_prestamo.getText().trim() + "-" +
+                        jTextField_aPaterno_persona_prestamo.getText().trim() + ".pdf"));
+        
+        //C:\Users\luis_\OneDrive\Documentos
+
+        // Encabezado de la imagen
+        Image encabezado = Image.getInstance("C:\\Users\\luis_\\Code\\AdminostracionBaseDatos\\Libros-y-Autores\\src\\imgenes\\libros.jpg");
+        encabezado.scaleToFit(650, 1000);
+        encabezado.setAlignment(Chunk.ALIGN_CENTER);
+
+        // Crear el párrafo de título
+        Paragraph parrafo = new Paragraph();
+        parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+        parrafo.add("Información del Usuario\n\n");
+        parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+        // Abrir el documento y agregar contenido
+        documento.open();
+        documento.add(encabezado);
+        documento.add(parrafo);
+
+        // Crear tabla para la información
+        PdfPTable tablaCliente = new PdfPTable(8);
+        tablaCliente.setWidthPercentage(100);
+        tablaCliente.addCell("ID Usuario");
+        tablaCliente.addCell("Nombre");
+        tablaCliente.addCell("Apellido Paterno");
+        tablaCliente.addCell("Apellido Materno");
+        tablaCliente.addCell("ID Préstamo");
+        tablaCliente.addCell("Título del Libro");
+        tablaCliente.addCell("Fecha de Emisión");
+        tablaCliente.addCell("Fecha de Devolución");
+
+        // Llenar la tabla con los datos de la base de datos
+        try {
+            Connection cn = Conexion.connectar();
+            
+            String query = "SELECT " +
+               "    persona.id_persona, " +
+               "    persona.nombre, " +
+               "    persona.apaterno, " +
+               "    persona.amaterno, " +
+               "    prestamo.id_prestamo, " +
+               "    prestamo.fecha_prestamo, " +
+               "    prestamo.fecha_devolucion, " +
+               "    libro.titulo " +
+               "FROM " +
+               "    persona " +
+               "INNER JOIN " +
+               "    persona_prestamo ON persona.id_persona = persona_prestamo.id_persona " +
+               "INNER JOIN " +
+               "    prestamo ON persona_prestamo.id_prestamo = prestamo.id_prestamo " +
+               "INNER JOIN " +
+               "    prestamo_libro ON prestamo.id_prestamo = prestamo_libro.id_prestamo " +
+               "INNER JOIN " +
+               "    libro ON prestamo_libro.id_libro = libro.id_libro " +
+               "WHERE " +
+               "    persona_prestamo.id_persona = ?";
+
+            
+            PreparedStatement pst = cn.prepareStatement(query);
+            pst.setString(1, jTextField_id_persona_prestamo.getText().trim());
+
+            ResultSet rs = pst.executeQuery();
+            if (!rs.isBeforeFirst()) {
+                JOptionPane.showMessageDialog(null, "No hay datos para el usuario especificado.");
+            } else {
+                while (rs.next()) {
+                    tablaCliente.addCell(rs.getString("id_persona"));
+                    tablaCliente.addCell(rs.getString("nombre"));
+                    tablaCliente.addCell(rs.getString("apaterno"));
+                    tablaCliente.addCell(rs.getString("amaterno"));
+                    tablaCliente.addCell(rs.getString("id_prestamo"));
+                    tablaCliente.addCell(rs.getString("fecha_prestamo"));
+                    tablaCliente.addCell(rs.getString("fecha_devolucion"));
+                    tablaCliente.addCell(rs.getString("titulo"));
+                    
+                }
+            }
+            cn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los datos: " + e.getMessage());
+        }
+
+        // Agregar la tabla al documento
+        documento.add(tablaCliente);
+        JOptionPane.showMessageDialog(null, "PDF generado correctamente en el escritorio.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+    } finally {
+        documento.close();
+    }
+
+
+//        
+//        Document documento = new Document();
+//        
+//        try {
+//            
+//            String ruta = System.getProperty("user.home");
+//            PdfWriter.getInstance(documento, 
+//                    new FileOutputStream(ruta + 
+//                            "/Desktop/" +
+//                            jTextField_nombre_persona_prestamo.getText().trim()+
+//                            "-" +
+//                            jTextField_aPaterno_persona_prestamo.getText().trim()+
+//                            ".pdf"));
+//            
+//            Image encabezado = com.itextpdf.text.Image.getInstance("src/images/libros.jpg");
+//            encabezado.scaleToFit(650, 1000);
+//            encabezado.setAlignment(Chunk.ALIGN_CENTER);
+//            
+//            Paragraph parrafo = new Paragraph();
+//            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+//            parrafo.add("Información del usuario");
+//            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+//            
+//            documento.open();
+//            documento.add(encabezado);
+//            documento.add(parrafo);
+//            
+//            PdfPTable tablaCliente = new PdfPTable(8);
+//            tablaCliente.addCell("ID del Ususario");
+//            tablaCliente.addCell("Nombre");
+//            tablaCliente.addCell("ApellPaterno");
+//            tablaCliente.addCell("ApellMaterno");
+//            tablaCliente.addCell("ID del Prestamo");
+//            tablaCliente.addCell("Titulo de los Libros");
+//            tablaCliente.addCell("Fecha de emision");
+//            tablaCliente.addCell("Fecha de devolucion");
+//            
+//            try {
+//                Connection cn =Conexion.connectar();
+//                PreparedStatement pst = cn.prepareStatement(
+//                "select * from");
+//                
+//                
+//                documento.add(tablaCliente);
+//            } catch (Exception e) {
+//            }
+//            
+//            
+//            
+//        } catch (Exception e) {
+//        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1130,6 +1349,7 @@ public class FormMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_actualizar;
     private javax.swing.JButton jButton_add_prestamo;
     private javax.swing.JButton jButton_buscar;
